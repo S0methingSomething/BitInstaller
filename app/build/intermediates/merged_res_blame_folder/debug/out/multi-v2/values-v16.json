@@ -4,7 +4,7 @@
             "outputFile": "com.community.bitinstaller.app-mergeDebugResources-34:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/d0962e3cd95d785309666b77b5473090/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
+                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/3cbbdf143a903323c998aca37cfd4403/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/7c108dd56627f30fe94755d1a2faeaf2/transformed/core-1.12.0/res/values-v16/values-v16.xml",
+                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/df599d98af2e802b1087f927c5dc5c8e/transformed/core-1.12.0/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.20'
+    id 'io.gitlab.arturbosch.detekt' version '1.23.4'
 }
 
 android {
@@ -45,19 +46,60 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        allWarningsAsErrors = true
+        freeCompilerArgs += [
+            '-Xjsr305=strict',
+            '-opt-in=kotlin.RequiresOptIn'
+        ]
     }
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     lint {
         abortOnError true
         checkReleaseBuilds true
-        warningsAsErrors false
+        checkAllWarnings true
+        warningsAsErrors true
+        ignoreWarnings false
+        checkDependencies true
+        checkGeneratedSources true
+        explainIssues true
+        
         disable 'MissingTranslation'
-        enable 'Interoperability', 'UnusedResources'
+        
+        enable 'Interoperability', 'UnusedResources', 'NewApi', 'InlinedApi',
+               'Deprecated', 'ObsoleteSdkInt', 'TypographyDashes', 'TypographyQuotes',
+               'Typos', 'ViewConstructor', 'UseCompoundDrawables', 'UselessParent',
+               'InefficientWeight', 'NestedWeights', 'DisableBaselineAlignment',
+               'ScrollViewSize', 'NegativeMargin', 'Overdraw', 'UnusedIds',
+               'IconDensities', 'IconDuplicates', 'IconMissingDensityFolder',
+               'GifUsage', 'WebPUsage', 'VectorPath', 'AnimatorKeep',
+               'ClickableViewAccessibility', 'ContentDescription', 'LabelFor',
+               'SetTextI18n', 'HardcodedText', 'RelativeOverlap', 'RtlHardcoded',
+               'RtlSymmetry', 'EnforceUTF8', 'Recycle', 'CommitTransaction',
+               'Wakelock', 'InvalidPackage', 'LogConditional', 'StopShip',
+               'Assert', 'KotlinPropertyAccess', 'LambdaLast', 'UnknownNullness',
+               'SyntheticAccessor', 'PrivateResource', 'SdCardPath', 'HardwareIds',
+               'PackageManagerGetSignatures', 'UnsafeDynamicallyLoadedCode',
+               'TrustAllX509TrustManager', 'SSLCertificateSocketFactoryCreateSocket',
+               'SSLCertificateSocketFactoryGetInsecure', 'SetJavaScriptEnabled',
+               'AllowBackup', 'ExportedContentProvider', 'ExportedReceiver',
+               'ExportedService', 'GrantAllUris', 'WorldReadableFiles',
+               'WorldWriteableFiles'
+        
+        fatal 'StopShip', 'NewApi', 'InlinedApi'
+        error 'Wakelock', 'Recycle', 'CommitTransaction'
+        warning 'UnusedResources'
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = true
+    config.setFrom(files("$rootDir/detekt-config.yml"))
 }
 
 dependencies {
@@ -87,4 +129,13 @@ dependencies {
     
     // SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    
+    // Static analysis
+    detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4'
+}
+
+tasks.register('checkCode') {
+    dependsOn 'detekt', 'lint'
+    group = 'verification'
+    description = 'Run all code quality checks'
 }
