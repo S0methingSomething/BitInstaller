@@ -50,6 +50,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    lint {
+        abortOnError true
+        checkReleaseBuilds true
+        warningsAsErrors false
+        disable 'MissingTranslation'
+        enable 'Interoperability', 'UnusedResources'
+    }
 }
 
 dependencies {
