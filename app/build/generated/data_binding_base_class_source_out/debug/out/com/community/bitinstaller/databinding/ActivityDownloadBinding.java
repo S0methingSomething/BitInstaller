@@ -12,7 +12,6 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.community.bitinstaller.R;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -26,30 +25,52 @@ public final class ActivityDownloadBinding implements ViewBinding {
   public final LinearProgressIndicator progressBar;
 
   @NonNull
-  public final MaterialCardView sha256Card;
-
-  @NonNull
-  public final TextView sha256Label;
-
-  @NonNull
   public final TextView sha256Text;
 
   @NonNull
-  public final TextView statusText;
+  public final TextView step1Icon;
+
+  @NonNull
+  public final TextView step1Status;
+
+  @NonNull
+  public final TextView step2Icon;
+
+  @NonNull
+  public final TextView step2Status;
+
+  @NonNull
+  public final TextView step3Icon;
+
+  @NonNull
+  public final TextView step3Status;
+
+  @NonNull
+  public final TextView step4Icon;
+
+  @NonNull
+  public final TextView step4Status;
 
   @NonNull
   public final MaterialToolbar toolbar;
 
   private ActivityDownloadBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull LinearProgressIndicator progressBar, @NonNull MaterialCardView sha256Card,
-      @NonNull TextView sha256Label, @NonNull TextView sha256Text, @NonNull TextView statusText,
+      @NonNull LinearProgressIndicator progressBar, @NonNull TextView sha256Text,
+      @NonNull TextView step1Icon, @NonNull TextView step1Status, @NonNull TextView step2Icon,
+      @NonNull TextView step2Status, @NonNull TextView step3Icon, @NonNull TextView step3Status,
+      @NonNull TextView step4Icon, @NonNull TextView step4Status,
       @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
     this.progressBar = progressBar;
-    this.sha256Card = sha256Card;
-    this.sha256Label = sha256Label;
     this.sha256Text = sha256Text;
-    this.statusText = statusText;
+    this.step1Icon = step1Icon;
+    this.step1Status = step1Status;
+    this.step2Icon = step2Icon;
+    this.step2Status = step2Status;
+    this.step3Icon = step3Icon;
+    this.step3Status = step3Status;
+    this.step4Icon = step4Icon;
+    this.step4Status = step4Status;
     this.toolbar = toolbar;
   }
 
@@ -86,27 +107,57 @@ public final class ActivityDownloadBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.sha256Card;
-      MaterialCardView sha256Card = ViewBindings.findChildViewById(rootView, id);
-      if (sha256Card == null) {
-        break missingId;
-      }
-
-      id = R.id.sha256Label;
-      TextView sha256Label = ViewBindings.findChildViewById(rootView, id);
-      if (sha256Label == null) {
-        break missingId;
-      }
-
       id = R.id.sha256Text;
       TextView sha256Text = ViewBindings.findChildViewById(rootView, id);
       if (sha256Text == null) {
         break missingId;
       }
 
-      id = R.id.statusText;
-      TextView statusText = ViewBindings.findChildViewById(rootView, id);
-      if (statusText == null) {
+      id = R.id.step1Icon;
+      TextView step1Icon = ViewBindings.findChildViewById(rootView, id);
+      if (step1Icon == null) {
+        break missingId;
+      }
+
+      id = R.id.step1Status;
+      TextView step1Status = ViewBindings.findChildViewById(rootView, id);
+      if (step1Status == null) {
+        break missingId;
+      }
+
+      id = R.id.step2Icon;
+      TextView step2Icon = ViewBindings.findChildViewById(rootView, id);
+      if (step2Icon == null) {
+        break missingId;
+      }
+
+      id = R.id.step2Status;
+      TextView step2Status = ViewBindings.findChildViewById(rootView, id);
+      if (step2Status == null) {
+        break missingId;
+      }
+
+      id = R.id.step3Icon;
+      TextView step3Icon = ViewBindings.findChildViewById(rootView, id);
+      if (step3Icon == null) {
+        break missingId;
+      }
+
+      id = R.id.step3Status;
+      TextView step3Status = ViewBindings.findChildViewById(rootView, id);
+      if (step3Status == null) {
+        break missingId;
+      }
+
+      id = R.id.step4Icon;
+      TextView step4Icon = ViewBindings.findChildViewById(rootView, id);
+      if (step4Icon == null) {
+        break missingId;
+      }
+
+      id = R.id.step4Status;
+      TextView step4Status = ViewBindings.findChildViewById(rootView, id);
+      if (step4Status == null) {
         break missingId;
       }
 
@@ -116,8 +167,9 @@ public final class ActivityDownloadBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityDownloadBinding((CoordinatorLayout) rootView, progressBar, sha256Card,
-          sha256Label, sha256Text, statusText, toolbar);
+      return new ActivityDownloadBinding((CoordinatorLayout) rootView, progressBar, sha256Text,
+          step1Icon, step1Status, step2Icon, step2Status, step3Icon, step3Status, step4Icon,
+          step4Status, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

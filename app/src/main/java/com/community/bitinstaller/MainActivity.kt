@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +14,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.community.bitinstaller.adapter.AppListAdapter
+import com.community.bitinstaller.utils.ShizukuHelper
 import com.community.bitinstaller.viewmodel.MainViewModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -24,12 +27,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var shizukuHelper: ShizukuHelper
+    private lateinit var shizukuStatusIcon: TextView
+    private lateinit var shizukuStatusText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        shizukuHelper = ShizukuHelper(this)
         
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -37,10 +44,25 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         swipeRefresh = findViewById(R.id.swipeRefresh)
         progressBar = findViewById(R.id.progressBar)
+        shizukuStatusIcon = findViewById(R.id.shizukuStatusIcon)
+        shizukuStatusText = findViewById(R.id.shizukuStatusText)
+
+        updateShizukuStatus()
 
         adapter = AppListAdapter { appItem ->
             if (!appItem.isInstalled) {
                 showError("App not installed")
+                return@AppListAdapter
+            }
+            
+            if (!shizukuHelper.isShizukuAvailable()) {
+                showError("Shizuku is not available. Please install and start Shizuku.")
+                return@AppListAdapter
+            }
+            
+            if (!shizukuHelper.checkPermission()) {
+                shizukuHelper.requestPermission(1001)
+                showError("Please grant Shizuku permission")
                 return@AppListAdapter
             }
             
@@ -63,6 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         swipeRefresh.setOnRefreshListener {
             viewModel.loadApps(this)
+            updateShizukuStatus()
         }
 
         lifecycleScope.launch {
@@ -85,6 +108,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.loadApps(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateShizukuStatus()
+    }
+
+    private fun updateShizukuStatus() {
+        val isAvailable = shizukuHelper.isShizukuAvailable()
+        val hasPermission = shizukuHelper.checkPermission()
+        
+        when {
+            !isAvailable -> {
+                shizukuStatusIcon.setTextColor(0xFFFF0000.toInt())
+                shizukuStatusText.text = "Shizuku: Not Available"
+            }
+            !hasPermission -> {
+                shizukuStatusIcon.setTextColor(0xFFFFAA00.toInt())
+                shizukuStatusText.text = "Shizuku: Permission Required"
+            }
+            else -> {
+                shizukuStatusIcon.setTextColor(0xFF00FF00.toInt())
+                shizukuStatusText.text = "Shizuku: Ready"
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -143,10 +191,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showError(message: String) {
-        AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage(message)
-            .setPositiveButton("OK", null)
-            .show()
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()
     }
 }

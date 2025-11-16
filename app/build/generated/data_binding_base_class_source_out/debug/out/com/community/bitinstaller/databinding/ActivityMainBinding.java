@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -14,6 +15,7 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.community.bitinstaller.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -29,17 +31,30 @@ public final class ActivityMainBinding implements ViewBinding {
   public final RecyclerView recyclerView;
 
   @NonNull
+  public final MaterialCardView shizukuStatusCard;
+
+  @NonNull
+  public final TextView shizukuStatusIcon;
+
+  @NonNull
+  public final TextView shizukuStatusText;
+
+  @NonNull
   public final SwipeRefreshLayout swipeRefresh;
 
   @NonNull
   public final MaterialToolbar toolbar;
 
   private ActivityMainBinding(@NonNull CoordinatorLayout rootView, @NonNull ProgressBar progressBar,
-      @NonNull RecyclerView recyclerView, @NonNull SwipeRefreshLayout swipeRefresh,
-      @NonNull MaterialToolbar toolbar) {
+      @NonNull RecyclerView recyclerView, @NonNull MaterialCardView shizukuStatusCard,
+      @NonNull TextView shizukuStatusIcon, @NonNull TextView shizukuStatusText,
+      @NonNull SwipeRefreshLayout swipeRefresh, @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
     this.progressBar = progressBar;
     this.recyclerView = recyclerView;
+    this.shizukuStatusCard = shizukuStatusCard;
+    this.shizukuStatusIcon = shizukuStatusIcon;
+    this.shizukuStatusText = shizukuStatusText;
     this.swipeRefresh = swipeRefresh;
     this.toolbar = toolbar;
   }
@@ -83,6 +98,24 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.shizukuStatusCard;
+      MaterialCardView shizukuStatusCard = ViewBindings.findChildViewById(rootView, id);
+      if (shizukuStatusCard == null) {
+        break missingId;
+      }
+
+      id = R.id.shizukuStatusIcon;
+      TextView shizukuStatusIcon = ViewBindings.findChildViewById(rootView, id);
+      if (shizukuStatusIcon == null) {
+        break missingId;
+      }
+
+      id = R.id.shizukuStatusText;
+      TextView shizukuStatusText = ViewBindings.findChildViewById(rootView, id);
+      if (shizukuStatusText == null) {
+        break missingId;
+      }
+
       id = R.id.swipeRefresh;
       SwipeRefreshLayout swipeRefresh = ViewBindings.findChildViewById(rootView, id);
       if (swipeRefresh == null) {
@@ -96,7 +129,7 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((CoordinatorLayout) rootView, progressBar, recyclerView,
-          swipeRefresh, toolbar);
+          shizukuStatusCard, shizukuStatusIcon, shizukuStatusText, swipeRefresh, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
