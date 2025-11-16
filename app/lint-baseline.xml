@@ -244,6 +244,17 @@
     </issue>
 
     <issue
+        id="CustomX509TrustManager"
+        message="Implementing a custom `X509TrustManager` is error-prone and likely to be insecure. It is likely to disable certificate validation altogether, and is non-trivial to implement correctly without calling Android&apos;s default implementation."
+        errorLine1="class CompositeX509TrustManager("
+        errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/community/bitinstaller/network/CompositeX509TrustManager.kt"
+            line="11"
+            column="7"/>
+    </issue>
+
+    <issue
         id="QueryAllPackagesPermission"
         message="A `&lt;queries>` declaration should generally be used instead of QUERY_ALL_PACKAGES; \&#xA;see https://g.co/dev/packagevisibility for details"
         errorLine1="    &lt;uses-permission android:name=&quot;android.permission.QUERY_ALL_PACKAGES&quot;"
