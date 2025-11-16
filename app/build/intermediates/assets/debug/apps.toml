@@ -1,0 +1,8 @@
+[[apps]]
+package_name = "com.candywriter.bitlife"
+app_name = "BitLife"
+target_path = "files/monetizationvars"
+
+[apps.github]
+release_tag = "Latest-BitLife"
+asset_name = "MonetizationVars"

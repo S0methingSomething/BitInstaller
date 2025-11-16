@@ -1,0 +1,18 @@
+R_DEF: Internal format may change without notice
+local
+id appName
+id installButton
+id installedStatus
+id progressBar
+id recyclerView
+id sha256Label
+id sha256Text
+id statusText
+id swipeRefresh
+layout activity_download
+layout activity_main
+layout item_app
+string app_name
+string downloading
+string install
+string sha256

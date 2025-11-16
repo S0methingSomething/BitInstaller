@@ -40,10 +40,10 @@ class ShizukuHelper(private val context: Context) {
         if (!checkPermission()) throw SecurityException("Shizuku permission not granted")
         
         val destination = "/data/data/$packageName/$targetPath"
-        val command = "cp ${sourceFile.absolutePath} $destination"
+        val command = arrayOf("sh", "-c", "cp ${sourceFile.absolutePath} $destination")
         
         try {
-            val process = Shizuku.newProcess(arrayOf("sh", "-c", command), null, null)
+            val process = Runtime.getRuntime().exec(command)
             val exitCode = process.waitFor()
             exitCode == 0
         } catch (e: Exception) {

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.community.bitinstaller.app-merged_res-36:/layout_activity_main.xml.flat",
+        "source": "com.community.bitinstaller.app-main-38:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.community.bitinstaller.app-merged_res-36:/layout_item_app.xml.flat",
+        "source": "com.community.bitinstaller.app-main-38:/layout/item_app.xml"
+    },
+    {
+        "merged": "com.community.bitinstaller.app-merged_res-36:/layout_activity_download.xml.flat",
+        "source": "com.community.bitinstaller.app-main-38:/layout/activity_download.xml"
+    }
+]
