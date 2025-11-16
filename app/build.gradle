@@ -16,10 +16,23 @@ android {
         versionName "1.0"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../bitinstaller.keystore')
+            storePassword System.getenv("KEYSTORE_PASSWORD") ?: 'bitinstaller123'
+            keyAlias System.getenv("KEY_ALIAS") ?: 'bitinstaller'
+            keyPassword System.getenv("KEY_PASSWORD") ?: 'bitinstaller123'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
 
