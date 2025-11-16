@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.9.20' apply false
     id 'io.gitlab.arturbosch.detekt' version '1.23.4' apply false
     id 'com.autonomousapps.dependency-analysis' version '1.28.0'
+    id 'com.google.dagger.hilt.android' version '2.48' apply false
 }
 
 dependencyAnalysis {

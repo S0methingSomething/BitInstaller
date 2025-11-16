@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.20'
     id 'io.gitlab.arturbosch.detekt' version '1.23.4'
+    id 'com.google.dagger.hilt.android' version '2.48'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -22,9 +24,17 @@ android {
             def keystoreFile = file('../bitinstaller.keystore')
             if (keystoreFile.exists()) {
                 storeFile keystoreFile
-                storePassword System.getenv("KEYSTORE_PASSWORD") ?: 'bitinstaller123'
-                keyAlias System.getenv("KEY_ALIAS") ?: 'bitinstaller'
-                keyPassword System.getenv("KEY_PASSWORD") ?: 'bitinstaller123'
+                def storePass = System.getenv("KEYSTORE_PASSWORD")
+                def keyPass = System.getenv("KEY_PASSWORD")
+                def alias = System.getenv("KEY_ALIAS")
+                
+                if (storePass && keyPass && alias) {
+                    storePassword storePass
+                    keyAlias alias
+                    keyPassword keyPass
+                } else {
+                    logger.warn("Keystore credentials not found in environment variables")
+                }
             }
         }
     }
@@ -129,6 +139,21 @@ dependencies {
     
     // SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.48'
+    kapt 'com.google.dagger:hilt-compiler:2.48'
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.mockk:mockk:1.13.8'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'io.mockk:mockk-android:1.13.8'
     
     // Static analysis
     detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4'

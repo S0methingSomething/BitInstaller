@@ -4,4 +4,10 @@
     <string name="install">Install</string>
     <string name="downloading">Downloading…</string>
     <string name="sha256">SHA-256:</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_shizuku_status">Shizuku service status indicator</string>
+    <string name="cd_step_icon">Installation step indicator</string>
+    <string name="cd_install_button">Install configuration file</string>
+    <string name="cd_refresh">Refresh app list</string>
 </resources>

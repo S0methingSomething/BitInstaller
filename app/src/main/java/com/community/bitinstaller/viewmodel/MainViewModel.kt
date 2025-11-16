@@ -2,15 +2,20 @@ package com.community.bitinstaller.viewmodel
 
 import android.content.Context
 import android.content.pm.PackageManager
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.community.bitinstaller.models.AppConfig
 import com.community.bitinstaller.models.GitHubRelease
-import com.community.bitinstaller.network.GitHubApiService
-import com.community.bitinstaller.utils.ConfigLoader
+import com.community.bitinstaller.repository.AppRepository
+import com.community.bitinstaller.utils.Constants
+import com.community.bitinstaller.utils.InputValidator
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class AppItem(
     val config: AppConfig,
@@ -19,8 +24,16 @@ data class AppItem(
     val availableVersion: String?
 )
 
-class MainViewModel : ViewModel() {
-    private val _apps = MutableStateFlow<List<AppItem>>(emptyList())
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val repository: AppRepository,
+    @ApplicationContext private val context: Context
+) : ViewModel() {
+    
+    private val _apps = MutableStateFlow<List<AppItem>>(
+        savedStateHandle.get<List<AppItem>>("apps") ?: emptyList()
+    )
     val apps: StateFlow<List<AppItem>> = _apps
 
     private val _loading = MutableStateFlow(false)
@@ -29,11 +42,16 @@ class MainViewModel : ViewModel() {
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
-    private var apiService = GitHubApiService("S0methingSomething/BitBot")
+    private var currentRepo = savedStateHandle.get<String>("repo") ?: Constants.DEFAULT_GITHUB_REPO
     private var releases: List<GitHubRelease> = emptyList()
 
     fun setGitHubSource(repo: String) {
-        apiService = GitHubApiService(repo)
+        if (!InputValidator.validateGitHubRepo(repo)) {
+            _error.value = "Invalid GitHub repository format"
+            return
+        }
+        currentRepo = repo
+        savedStateHandle["repo"] = repo
     }
 
     private fun parseVersionFromDescription(body: String?, appName: String): String? {
@@ -52,39 +70,49 @@ class MainViewModel : ViewModel() {
         return null
     }
 
-    fun loadApps(context: Context) {
+    fun loadApps() {
         viewModelScope.launch {
             _loading.value = true
             _error.value = null
             try {
-                val configLoader = ConfigLoader(context)
-                val appsConfig = configLoader.loadAppsConfig()
-                releases = apiService.fetchReleases()
-                
+                val appsConfig = repository.loadAppsConfig()
+                releases = repository.fetchReleases(currentRepo)
+
                 val pm = context.packageManager
-                _apps.value = appsConfig.apps.map { config ->
+                val appItems = appsConfig.map { config ->
                     val isInstalled = try {
                         pm.getPackageInfo(config.packageName, 0)
                         true
                     } catch (e: PackageManager.NameNotFoundException) {
                         false
                     }
-                    
+
                     val installedVersion = if (isInstalled) {
                         try {
                             pm.getPackageInfo(config.packageName, 0).versionName
                         } catch (e: Exception) {
                             null
                         }
-                    } else null
-                    
+                    } else {
+                        null
+                    }
+
                     val release = releases.find { it.tag_name == config.github.releaseTag }
                     val availableVersion = release?.let { parseVersionFromDescription(it.body, config.appName) }
-                    
+
                     AppItem(config, isInstalled, installedVersion, availableVersion)
                 }
+                
+                _apps.value = appItems
+                savedStateHandle["apps"] = appItems
+            } catch (e: IllegalStateException) {
+                _error.value = "Configuration error: ${e.message}"
+            } catch (e: IllegalArgumentException) {
+                _error.value = "Invalid configuration: ${e.message}"
+            } catch (e: java.io.IOException) {
+                _error.value = "Network error: ${e.message}"
             } catch (e: Exception) {
-                _error.value = e.message ?: "Unknown error"
+                _error.value = "Unexpected error: ${e.message}"
             } finally {
                 _loading.value = false
             }

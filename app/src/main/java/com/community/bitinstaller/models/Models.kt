@@ -19,7 +19,9 @@ data class GithubConfig(
     @SerialName("release_tag")
     val releaseTag: String,
     @SerialName("asset_name")
-    val assetName: String
+    val assetName: String,
+    @SerialName("expected_sha256")
+    val expectedSha256: String? = null
 )
 
 data class GitHubRelease(

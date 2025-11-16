@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="shizuku_available">#00FF00</color>
+    <color name="shizuku_unavailable">#FF0000</color>
+    <color name="shizuku_permission_required">#FFAA00</color>
+    <color name="step_active">#FFFFFF</color>
+    <color name="step_active_bg">#333333</color>
+    <color name="step_complete">#00FF00</color>
+    <color name="step_error">#FF0000</color>
+</resources>

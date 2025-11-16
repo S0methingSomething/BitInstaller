@@ -7,27 +7,36 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.community.bitinstaller.adapter.AppListAdapter
+import com.community.bitinstaller.utils.Constants
+import com.community.bitinstaller.utils.InputValidator
 import com.community.bitinstaller.utils.ShizukuHelper
 import com.community.bitinstaller.viewmodel.MainViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
+    
+    @Inject
+    lateinit var shizukuHelper: ShizukuHelper
+    
     private lateinit var adapter: AppListAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var shizukuHelper: ShizukuHelper
     private lateinit var shizukuStatusIcon: TextView
     private lateinit var shizukuStatusText: TextView
 
@@ -35,12 +44,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        shizukuHelper = ShizukuHelper(this)
-        
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        
+
         recyclerView = findViewById(R.id.recyclerView)
         swipeRefresh = findViewById(R.id.swipeRefresh)
         progressBar = findViewById(R.id.progressBar)
@@ -54,43 +60,39 @@ class MainActivity : AppCompatActivity() {
                 showError("App not installed")
                 return@AppListAdapter
             }
-            
+
             if (!shizukuHelper.isShizukuAvailable()) {
                 showError("Shizuku is not available. Please install and start Shizuku.")
                 return@AppListAdapter
             }
-            
+
             if (!shizukuHelper.checkPermission()) {
-                shizukuHelper.requestPermission(1001)
+                shizukuHelper.requestPermission(Constants.RequestCodes.SHIZUKU_PERMISSION)
                 showError("Please grant Shizuku permission")
                 return@AppListAdapter
             }
-            
+
             val downloadUrl = viewModel.getDownloadUrl(appItem.config)
             if (downloadUrl == null) {
                 showError("Download URL not found")
                 return@AppListAdapter
             }
-            
-            val intent = Intent(this, DownloadActivity::class.java).apply {
-                putExtra("DOWNLOAD_URL", downloadUrl)
-                putExtra("PACKAGE_NAME", appItem.config.packageName)
-                putExtra("TARGET_PATH", appItem.config.targetPath)
-                putExtra("APP_NAME", appItem.config.appName)
-            }
-            startActivity(intent)
+
+            showConfirmationDialog(appItem, downloadUrl)
         }
-        
+
         recyclerView.adapter = adapter
 
         swipeRefresh.setOnRefreshListener {
-            viewModel.loadApps(this)
+            viewModel.loadApps()
             updateShizukuStatus()
         }
 
         lifecycleScope.launch {
             viewModel.apps.collect { apps ->
                 adapter.submitList(apps)
+                findViewById<View>(R.id.emptyState).visibility = 
+                    if (apps.isEmpty()) View.VISIBLE else View.GONE
             }
         }
 
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.loadApps(this)
+        viewModel.loadApps()
     }
 
     override fun onResume() {
@@ -118,18 +120,18 @@ class MainActivity : AppCompatActivity() {
     private fun updateShizukuStatus() {
         val isAvailable = shizukuHelper.isShizukuAvailable()
         val hasPermission = shizukuHelper.checkPermission()
-        
+
         when {
             !isAvailable -> {
-                shizukuStatusIcon.setTextColor(0xFFFF0000.toInt())
+                shizukuStatusIcon.setTextColor(ContextCompat.getColor(this, R.color.shizuku_unavailable))
                 shizukuStatusText.text = "Shizuku: Not Available"
             }
             !hasPermission -> {
-                shizukuStatusIcon.setTextColor(0xFFFFAA00.toInt())
+                shizukuStatusIcon.setTextColor(ContextCompat.getColor(this, R.color.shizuku_permission_required))
                 shizukuStatusText.text = "Shizuku: Permission Required"
             }
             else -> {
-                shizukuStatusIcon.setTextColor(0xFF00FF00.toInt())
+                shizukuStatusIcon.setTextColor(ContextCompat.getColor(this, R.color.shizuku_available))
                 shizukuStatusText.text = "Shizuku: Ready"
             }
         }
@@ -152,17 +154,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSourceDialog() {
         val sources = arrayOf(
-            "S0methingSomething/BitBot (Default)",
+            "${Constants.DEFAULT_GITHUB_REPO} (Default)",
             "Custom GitHub Repository"
         )
-        
+
         AlertDialog.Builder(this)
             .setTitle("Select Source")
             .setItems(sources) { _, which ->
                 when (which) {
                     0 -> {
-                        viewModel.setGitHubSource("S0methingSomething/BitBot")
-                        viewModel.loadApps(this)
+                        viewModel.setGitHubSource(Constants.DEFAULT_GITHUB_REPO)
+                        viewModel.loadApps()
                     }
                     1 -> showCustomSourceDialog()
                 }
@@ -172,19 +174,37 @@ class MainActivity : AppCompatActivity() {
 
     private fun showCustomSourceDialog() {
         val input = android.widget.EditText(this)
-        input.hint = "owner/repository"
-        
+        input.hint = Constants.GITHUB_REPO_FORMAT
+
         AlertDialog.Builder(this)
             .setTitle("Enter GitHub Repository")
             .setView(input)
             .setPositiveButton("OK") { _, _ ->
                 val repo = input.text.toString().trim()
-                if (repo.contains("/")) {
+                if (InputValidator.validateGitHubRepo(repo)) {
                     viewModel.setGitHubSource(repo)
-                    viewModel.loadApps(this)
+                    viewModel.loadApps()
                 } else {
-                    showError("Invalid format. Use: owner/repository")
+                    showError("Invalid format. Use: ${Constants.GITHUB_REPO_FORMAT}")
                 }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showConfirmationDialog(appItem: com.community.bitinstaller.viewmodel.AppItem, downloadUrl: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Install Configuration")
+            .setMessage("Install configuration file to ${appItem.config.appName}?\n\nThis will modify app data.")
+            .setPositiveButton("Install") { _, _ ->
+                val intent = Intent(this, DownloadActivity::class.java).apply {
+                    putExtra(Constants.IntentExtras.DOWNLOAD_URL, downloadUrl)
+                    putExtra(Constants.IntentExtras.PACKAGE_NAME, appItem.config.packageName)
+                    putExtra(Constants.IntentExtras.TARGET_PATH, appItem.config.targetPath)
+                    putExtra(Constants.IntentExtras.APP_NAME, appItem.config.appName)
+                    putExtra(Constants.IntentExtras.EXPECTED_SHA256, appItem.config.github.expectedSha256)
+                }
+                startActivity(intent)
             }
             .setNegativeButton("Cancel", null)
             .show()
