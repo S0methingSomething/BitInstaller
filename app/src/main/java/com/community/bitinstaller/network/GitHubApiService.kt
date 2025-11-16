@@ -8,12 +8,12 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class GitHubApiService {
+class GitHubApiService(private val repository: String = "S0methingSomething/BitBot") {
     private val client = OkHttpClient()
     private val gson = Gson()
-    private val apiUrl = "https://api.github.com/repos/S0methingSomething/BitBot/releases"
 
     suspend fun fetchReleases(): List<GitHubRelease> = withContext(Dispatchers.IO) {
+        val apiUrl = "https://api.github.com/repos/$repository/releases"
         val request = Request.Builder()
             .url(apiUrl)
             .build()

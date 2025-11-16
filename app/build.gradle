@@ -18,21 +18,23 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../bitinstaller.keystore')
-            storePassword System.getenv("KEYSTORE_PASSWORD") ?: 'bitinstaller123'
-            keyAlias System.getenv("KEY_ALIAS") ?: 'bitinstaller'
-            keyPassword System.getenv("KEY_PASSWORD") ?: 'bitinstaller123'
+            def keystoreFile = file('../bitinstaller.keystore')
+            if (keystoreFile.exists()) {
+                storeFile keystoreFile
+                storePassword System.getenv("KEYSTORE_PASSWORD") ?: 'bitinstaller123'
+                keyAlias System.getenv("KEY_ALIAS") ?: 'bitinstaller'
+                keyPassword System.getenv("KEY_PASSWORD") ?: 'bitinstaller123'
+            }
         }
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            signingConfig signingConfigs.release
+            if (signingConfigs.release.storeFile?.exists()) {
+                signingConfig signingConfigs.release
+            }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            signingConfig signingConfigs.release
         }
     }
 

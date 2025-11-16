@@ -1,5 +1,6 @@
 R_DEF: Internal format may change without notice
 local
+id action_change_source
 id appName
 id installButton
 id installedStatus
@@ -15,6 +16,7 @@ id versionInfo
 layout activity_download
 layout activity_main
 layout item_app
+menu main_menu
 string app_name
 string downloading
 string install

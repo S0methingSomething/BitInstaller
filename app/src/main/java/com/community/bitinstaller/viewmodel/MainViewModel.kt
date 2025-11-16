@@ -29,8 +29,12 @@ class MainViewModel : ViewModel() {
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
-    private val apiService = GitHubApiService()
+    private var apiService = GitHubApiService("S0methingSomething/BitBot")
     private var releases: List<GitHubRelease> = emptyList()
+
+    fun setGitHubSource(repo: String) {
+        apiService = GitHubApiService(repo)
+    }
 
     private fun parseVersionFromDescription(body: String?, appName: String): String? {
         if (body == null) return null
