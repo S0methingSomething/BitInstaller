@@ -133,7 +133,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     
     // TOML Parser
-    implementation 'net.peanuuutz.tomlkt:tomlkt:0.3.7'
+    implementation 'net.peanuuutz.tomlkt:tomlkt:0.5.0'
     
     // Shizuku
     implementation 'dev.rikka.shizuku:api:13.1.5'
