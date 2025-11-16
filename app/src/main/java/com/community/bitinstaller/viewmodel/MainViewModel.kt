@@ -14,7 +14,9 @@ import kotlinx.coroutines.launch
 
 data class AppItem(
     val config: AppConfig,
-    val isInstalled: Boolean
+    val isInstalled: Boolean,
+    val installedVersion: String?,
+    val availableVersion: String?
 )
 
 class MainViewModel : ViewModel() {
@@ -29,6 +31,22 @@ class MainViewModel : ViewModel() {
 
     private val apiService = GitHubApiService()
     private var releases: List<GitHubRelease> = emptyList()
+
+    private fun parseVersionFromDescription(body: String?, appName: String): String? {
+        if (body == null) return null
+        val lines = body.lines()
+        var foundApp = false
+        for (line in lines) {
+            if (line.trim().startsWith("app:", ignoreCase = true)) {
+                val app = line.substringAfter(":").trim()
+                foundApp = app.equals(appName, ignoreCase = true)
+            }
+            if (foundApp && line.trim().startsWith("version:", ignoreCase = true)) {
+                return line.substringAfter(":").trim()
+            }
+        }
+        return null
+    }
 
     fun loadApps(context: Context) {
         viewModelScope.launch {
@@ -47,7 +65,19 @@ class MainViewModel : ViewModel() {
                     } catch (e: PackageManager.NameNotFoundException) {
                         false
                     }
-                    AppItem(config, isInstalled)
+                    
+                    val installedVersion = if (isInstalled) {
+                        try {
+                            pm.getPackageInfo(config.packageName, 0).versionName
+                        } catch (e: Exception) {
+                            null
+                        }
+                    } else null
+                    
+                    val release = releases.find { it.tag_name == config.github.releaseTag }
+                    val availableVersion = release?.let { parseVersionFromDescription(it.body, config.appName) }
+                    
+                    AppItem(config, isInstalled, installedVersion, availableVersion)
                 }
             } catch (e: Exception) {
                 _error.value = e.message ?: "Unknown error"

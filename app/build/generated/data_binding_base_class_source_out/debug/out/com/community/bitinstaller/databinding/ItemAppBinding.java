@@ -29,12 +29,17 @@ public final class ItemAppBinding implements ViewBinding {
   @NonNull
   public final TextView installedStatus;
 
+  @NonNull
+  public final TextView versionInfo;
+
   private ItemAppBinding(@NonNull MaterialCardView rootView, @NonNull TextView appName,
-      @NonNull MaterialButton installButton, @NonNull TextView installedStatus) {
+      @NonNull MaterialButton installButton, @NonNull TextView installedStatus,
+      @NonNull TextView versionInfo) {
     this.rootView = rootView;
     this.appName = appName;
     this.installButton = installButton;
     this.installedStatus = installedStatus;
+    this.versionInfo = versionInfo;
   }
 
   @Override
@@ -82,8 +87,14 @@ public final class ItemAppBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.versionInfo;
+      TextView versionInfo = ViewBindings.findChildViewById(rootView, id);
+      if (versionInfo == null) {
+        break missingId;
+      }
+
       return new ItemAppBinding((MaterialCardView) rootView, appName, installButton,
-          installedStatus);
+          installedStatus, versionInfo);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

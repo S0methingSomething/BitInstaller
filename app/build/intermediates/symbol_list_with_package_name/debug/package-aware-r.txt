@@ -3471,6 +3471,7 @@ id search_voice_btn
 id select_dialog_listview
 id selected
 id selection_type
+id sha256Card
 id sha256Label
 id sha256Text
 id sharedValueSet
@@ -3548,6 +3549,7 @@ id title
 id titleDividerNoCustom
 id title_template
 id toggle
+id toolbar
 id top
 id topPanel
 id touch_outside
@@ -3564,6 +3566,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id versionInfo
 id vertical_only
 id view_offset_helper
 id view_transition
@@ -4494,6 +4497,7 @@ style Theme_AppCompat_Light_Dialog_MinWidth
 style Theme_AppCompat_Light_DialogWhenLarge
 style Theme_AppCompat_Light_NoActionBar
 style Theme_AppCompat_NoActionBar
+style Theme_BitInstaller
 style Theme_Design
 style Theme_Design_BottomSheetDialog
 style Theme_Design_Light

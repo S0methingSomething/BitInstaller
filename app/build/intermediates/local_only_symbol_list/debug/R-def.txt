@@ -5,10 +5,13 @@ id installButton
 id installedStatus
 id progressBar
 id recyclerView
+id sha256Card
 id sha256Label
 id sha256Text
 id statusText
 id swipeRefresh
+id toolbar
+id versionInfo
 layout activity_download
 layout activity_main
 layout item_app
@@ -16,3 +19,4 @@ string app_name
 string downloading
 string install
 string sha256
+style Theme.BitInstaller

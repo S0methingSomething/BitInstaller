@@ -7,19 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.community.bitinstaller.R;
+import com.google.android.material.appbar.MaterialToolbar;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final CoordinatorLayout rootView;
 
   @NonNull
   public final ProgressBar progressBar;
@@ -30,17 +31,22 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final SwipeRefreshLayout swipeRefresh;
 
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull ProgressBar progressBar,
-      @NonNull RecyclerView recyclerView, @NonNull SwipeRefreshLayout swipeRefresh) {
+  @NonNull
+  public final MaterialToolbar toolbar;
+
+  private ActivityMainBinding(@NonNull CoordinatorLayout rootView, @NonNull ProgressBar progressBar,
+      @NonNull RecyclerView recyclerView, @NonNull SwipeRefreshLayout swipeRefresh,
+      @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
     this.progressBar = progressBar;
     this.recyclerView = recyclerView;
     this.swipeRefresh = swipeRefresh;
+    this.toolbar = toolbar;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public CoordinatorLayout getRoot() {
     return rootView;
   }
 
@@ -83,8 +89,14 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, progressBar, recyclerView,
-          swipeRefresh);
+      id = R.id.toolbar;
+      MaterialToolbar toolbar = ViewBindings.findChildViewById(rootView, id);
+      if (toolbar == null) {
+        break missingId;
+      }
+
+      return new ActivityMainBinding((CoordinatorLayout) rootView, progressBar, recyclerView,
+          swipeRefresh, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

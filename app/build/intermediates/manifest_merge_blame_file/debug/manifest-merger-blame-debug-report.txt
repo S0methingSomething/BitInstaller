@@ -41,8 +41,8 @@
 26-->/home/cloudytfn/BitInstaller/app/src/main/AndroidManifest.xml:9:9-41
 27        android:supportsRtl="true"
 27-->/home/cloudytfn/BitInstaller/app/src/main/AndroidManifest.xml:10:9-35
-28        android:theme="@style/Theme.Material3.DayNight" >
-28-->/home/cloudytfn/BitInstaller/app/src/main/AndroidManifest.xml:11:9-56
+28        android:theme="@style/Theme.Material3.DynamicColors.DayNight" >
+28-->/home/cloudytfn/BitInstaller/app/src/main/AndroidManifest.xml:11:9-70
 29        <activity
 29-->/home/cloudytfn/BitInstaller/app/src/main/AndroidManifest.xml:13:9-20:20
 30            android:name="com.community.bitinstaller.MainActivity"

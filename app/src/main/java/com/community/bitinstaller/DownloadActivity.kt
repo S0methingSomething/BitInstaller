@@ -18,6 +18,7 @@ class DownloadActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var sha256Label: TextView
     private lateinit var sha256Text: TextView
+    private lateinit var sha256Card: View
     private lateinit var shizukuHelper: ShizukuHelper
     private lateinit var downloadedFile: File
     
@@ -31,6 +32,7 @@ class DownloadActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         sha256Label = findViewById(R.id.sha256Label)
         sha256Text = findViewById(R.id.sha256Text)
+        sha256Card = findViewById(R.id.sha256Card)
 
         shizukuHelper = ShizukuHelper(this)
 
@@ -79,8 +81,7 @@ class DownloadActivity : AppCompatActivity() {
                 }
 
                 statusText.text = "Download complete"
-                sha256Label.visibility = View.VISIBLE
-                sha256Text.visibility = View.VISIBLE
+                sha256Card.visibility = View.VISIBLE
                 sha256Text.text = sha256
 
                 if (!shizukuHelper.isShizukuAvailable()) {

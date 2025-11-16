@@ -4,24 +4,29 @@ package com.community.bitinstaller.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.community.bitinstaller.R;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class ActivityDownloadBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final CoordinatorLayout rootView;
 
   @NonNull
-  public final ProgressBar progressBar;
+  public final LinearProgressIndicator progressBar;
+
+  @NonNull
+  public final MaterialCardView sha256Card;
 
   @NonNull
   public final TextView sha256Label;
@@ -32,19 +37,25 @@ public final class ActivityDownloadBinding implements ViewBinding {
   @NonNull
   public final TextView statusText;
 
-  private ActivityDownloadBinding(@NonNull ConstraintLayout rootView,
-      @NonNull ProgressBar progressBar, @NonNull TextView sha256Label, @NonNull TextView sha256Text,
-      @NonNull TextView statusText) {
+  @NonNull
+  public final MaterialToolbar toolbar;
+
+  private ActivityDownloadBinding(@NonNull CoordinatorLayout rootView,
+      @NonNull LinearProgressIndicator progressBar, @NonNull MaterialCardView sha256Card,
+      @NonNull TextView sha256Label, @NonNull TextView sha256Text, @NonNull TextView statusText,
+      @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
     this.progressBar = progressBar;
+    this.sha256Card = sha256Card;
     this.sha256Label = sha256Label;
     this.sha256Text = sha256Text;
     this.statusText = statusText;
+    this.toolbar = toolbar;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public CoordinatorLayout getRoot() {
     return rootView;
   }
 
@@ -70,8 +81,14 @@ public final class ActivityDownloadBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.progressBar;
-      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
+      LinearProgressIndicator progressBar = ViewBindings.findChildViewById(rootView, id);
       if (progressBar == null) {
+        break missingId;
+      }
+
+      id = R.id.sha256Card;
+      MaterialCardView sha256Card = ViewBindings.findChildViewById(rootView, id);
+      if (sha256Card == null) {
         break missingId;
       }
 
@@ -93,8 +110,14 @@ public final class ActivityDownloadBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityDownloadBinding((ConstraintLayout) rootView, progressBar, sha256Label,
-          sha256Text, statusText);
+      id = R.id.toolbar;
+      MaterialToolbar toolbar = ViewBindings.findChildViewById(rootView, id);
+      if (toolbar == null) {
+        break missingId;
+      }
+
+      return new ActivityDownloadBinding((CoordinatorLayout) rootView, progressBar, sha256Card,
+          sha256Label, sha256Text, statusText, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
