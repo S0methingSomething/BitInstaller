@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="shizuku_available">#00FF00</color>
+    <color name="shizuku_permission_required">#FFAA00</color>
+    <color name="shizuku_unavailable">#FF0000</color>
+    <color name="step_active">#FFFFFF</color>
+    <color name="step_active_bg">#333333</color>
+    <color name="step_complete">#00FF00</color>
+    <color name="step_error">#FF0000</color>
     <string name="app_name">BitInstaller</string>
+    <string name="cd_install_button">Install configuration file</string>
+    <string name="cd_refresh">Refresh app list</string>
+    <string name="cd_shizuku_status">Shizuku service status indicator</string>
+    <string name="cd_step_icon">Installation step indicator</string>
     <string name="downloading">Downloading…</string>
     <string name="install">Install</string>
     <string name="sha256">SHA-256:</string>

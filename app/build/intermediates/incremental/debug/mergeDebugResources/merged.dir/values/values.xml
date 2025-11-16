@@ -950,6 +950,13 @@
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
+    <color name="shizuku_available">#00FF00</color>
+    <color name="shizuku_permission_required">#FFAA00</color>
+    <color name="shizuku_unavailable">#FF0000</color>
+    <color name="step_active">#FFFFFF</color>
+    <color name="step_active_bg">#333333</color>
+    <color name="step_complete">#00FF00</color>
+    <color name="step_error">#FF0000</color>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
@@ -1981,6 +1988,10 @@
     <string name="call_notification_incoming_text">Incoming call</string>
     <string name="call_notification_ongoing_text">Ongoing call</string>
     <string name="call_notification_screening_text">Screening an incoming call</string>
+    <string name="cd_install_button">Install configuration file</string>
+    <string name="cd_refresh">Refresh app list</string>
+    <string name="cd_shizuku_status">Shizuku service status indicator</string>
+    <string name="cd_step_icon">Installation step indicator</string>
     <string name="character_counter_content_description">Characters entered %1$d of %2$d</string>
     <string name="character_counter_overflowed_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern" translatable="false">%1$d/%2$d</string>

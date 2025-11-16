@@ -21,32 +21,27 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideConfigLoader(@ApplicationContext context: Context): ConfigLoader {
-        return ConfigLoader(context)
-    }
+    fun provideConfigLoader(@ApplicationContext context: Context): ConfigLoader =
+        ConfigLoader(context)
 
     @Provides
     @Singleton
-    fun provideGitHubApiServiceFactory(): GitHubApiServiceFactory {
-        return GitHubApiServiceFactoryImpl()
-    }
+    fun provideGitHubApiServiceFactory(): GitHubApiServiceFactory =
+        GitHubApiServiceFactoryImpl()
 
     @Provides
     @Singleton
     fun provideAppRepository(
         configLoader: ConfigLoader,
         apiServiceFactory: GitHubApiServiceFactory
-    ): AppRepository {
-        return AppRepositoryImpl(configLoader, apiServiceFactory)
-    }
+    ): AppRepository =
+        AppRepositoryImpl(configLoader, apiServiceFactory)
 
     @Provides
-    fun provideFileDownloader(): FileDownloader {
-        return FileDownloader()
-    }
+    fun provideFileDownloader(): FileDownloader =
+        FileDownloader()
 
     @Provides
-    fun provideShizukuHelper(@ApplicationContext context: Context): ShizukuHelper {
-        return ShizukuHelper(context)
-    }
+    fun provideShizukuHelper(): ShizukuHelper =
+        ShizukuHelper()
 }

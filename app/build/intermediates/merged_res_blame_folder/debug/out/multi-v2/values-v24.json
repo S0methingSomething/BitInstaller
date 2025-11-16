@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.community.bitinstaller.app-mergeDebugResources-34:/values-v24/values-v24.xml",
+            "outputFile": "com.community.bitinstaller.app-mergeDebugResources-36:/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/ebfd6358bf3513caea032bc604683f5d/transformed/material-1.11.0/res/values-v24/values-v24.xml",
+                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/c87f919e26341b5edbba632a0d398a67/transformed/material-1.11.0/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,9,12,15",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/3cbbdf143a903323c998aca37cfd4403/transformed/appcompat-1.6.1/res/values-v24/values-v24.xml",
+                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/217414c7626a26b74e5b61672722108f/transformed/appcompat-1.6.1/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

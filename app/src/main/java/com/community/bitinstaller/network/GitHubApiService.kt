@@ -16,7 +16,7 @@ class GitHubApiService(private val repository: String) {
         .writeTimeout(30, TimeUnit.SECONDS)
         .certificatePinner(CertificatePinner.create())
         .build()
-    
+
     private val gson = Gson()
 
     suspend fun fetchReleases(): List<GitHubRelease> = withContext(Dispatchers.IO) {
@@ -31,7 +31,7 @@ class GitHubApiService(private val repository: String) {
                 200 -> {
                     val body = response.body?.string() ?: throw Exception("Empty response")
                     val type = object : TypeToken<List<GitHubRelease>>() {}.type
-                    gson.fromJson(body, type)
+                    gson.fromJson<List<GitHubRelease>>(body, type)
                 }
                 404 -> throw Exception("Repository not found: $repository")
                 403 -> throw Exception("Rate limited. Please try again later.")

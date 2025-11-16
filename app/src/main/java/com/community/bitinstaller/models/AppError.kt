@@ -8,7 +8,7 @@ sealed class AppError(open val message: String) {
     data class ValidationError(val field: String, override val message: String) : AppError(message)
     data class SecurityError(override val message: String) : AppError(message)
     data class UnknownError(override val message: String) : AppError(message)
-    
+
     fun toUserMessage(): String = when (this) {
         is NetworkError -> when (code) {
             404 -> "Release not found. Please check the source."

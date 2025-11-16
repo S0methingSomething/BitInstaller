@@ -65,12 +65,12 @@ class FileDownloader {
         }
 
         val calculatedHash = calculateSHA256(outputFile)
-        
+
         if (expectedSha256 != null && !calculatedHash.equals(expectedSha256, ignoreCase = true)) {
             outputFile.delete()
             throw SecurityException("SHA-256 verification failed. Expected: $expectedSha256, Got: $calculatedHash")
         }
-        
+
         calculatedHash
     }
 

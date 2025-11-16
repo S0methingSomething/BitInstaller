@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.community.bitinstaller.app-mergeDebugResources-34:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+            "outputFile": "com.community.bitinstaller.app-mergeDebugResources-36:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
             "map": [
                 {
-                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/ebfd6358bf3513caea032bc604683f5d/transformed/material-1.11.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/c87f919e26341b5edbba632a0d398a67/transformed/material-1.11.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

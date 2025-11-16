@@ -1,7 +1,6 @@
 package com.community.bitinstaller
 
 import android.content.Context
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.community.bitinstaller.viewmodel.MainViewModel
@@ -14,7 +13,9 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +46,7 @@ class MainViewModelTest {
     fun `setGitHubSource validates repo format`() {
         viewModel.setGitHubSource("invalid")
         assertNotNull(viewModel.error.value)
-        
+
         viewModel.setGitHubSource("owner/repo")
         assertNull(viewModel.error.value)
     }
@@ -55,7 +56,7 @@ class MainViewModelTest {
         val packageManager = mockk<PackageManager>()
         every { context.packageManager } returns packageManager
         every { context.assets } returns mockk(relaxed = true)
-        
+
         assertFalse(viewModel.loading.value)
     }
 
@@ -63,7 +64,7 @@ class MainViewModelTest {
     fun `getDownloadUrl returns null when release not found`() {
         val config = mockk<com.community.bitinstaller.models.AppConfig>(relaxed = true)
         every { config.github.releaseTag } returns "nonexistent"
-        
+
         val url = viewModel.getDownloadUrl(config)
         assertNull(url)
     }

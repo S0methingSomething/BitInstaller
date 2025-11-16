@@ -2084,6 +2084,13 @@ color secondary_text_default_material_dark
 color secondary_text_default_material_light
 color secondary_text_disabled_material_dark
 color secondary_text_disabled_material_light
+color shizuku_available
+color shizuku_permission_required
+color shizuku_unavailable
+color step_active
+color step_active_bg
+color step_complete
+color step_error
 color switch_thumb_disabled_material_dark
 color switch_thumb_disabled_material_light
 color switch_thumb_material_dark
@@ -3252,6 +3259,7 @@ id edit_query
 id edit_text_id
 id elastic
 id embed
+id emptyState
 id end
 id endToStart
 id enterAlways
@@ -3726,6 +3734,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout empty_state
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_app
@@ -3835,6 +3844,10 @@ string call_notification_hang_up_action
 string call_notification_incoming_text
 string call_notification_ongoing_text
 string call_notification_screening_text
+string cd_install_button
+string cd_refresh
+string cd_shizuku_status
+string cd_step_icon
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern

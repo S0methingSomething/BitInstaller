@@ -1,6 +1,5 @@
 package com.community.bitinstaller.utils
 
-import android.content.Context
 import android.content.pm.PackageManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +9,7 @@ import java.io.File
 /**
  * Helper class for Shizuku integration to perform privileged file operations.
  */
-class ShizukuHelper(private val context: Context) {
+class ShizukuHelper {
 
     /**
      * Checks if Shizuku service is available and running.
@@ -70,12 +69,12 @@ class ShizukuHelper(private val context: Context) {
             val command = arrayOf("cp", sourceFile.absolutePath, validatedPath)
             val process = Runtime.getRuntime().exec(command)
             val exitCode = process.waitFor()
-            
+
             if (exitCode != 0) {
                 val error = process.errorStream.bufferedReader().readText()
                 throw Exception("Copy failed: $error")
             }
-            
+
             exitCode == 0
         } catch (e: SecurityException) {
             throw e

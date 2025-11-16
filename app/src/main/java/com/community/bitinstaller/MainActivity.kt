@@ -28,10 +28,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
-    
+
     @Inject
     lateinit var shizukuHelper: ShizukuHelper
-    
+
     private lateinit var adapter: AppListAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.apps.collect { apps ->
                 adapter.submitList(apps)
-                findViewById<View>(R.id.emptyState).visibility = 
+                findViewById<View>(R.id.emptyState).visibility =
                     if (apps.isEmpty()) View.VISIBLE else View.GONE
             }
         }
@@ -143,12 +143,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_change_source -> {
-                showSourceDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        return if (item.itemId == R.id.action_change_source) {
+            showSourceDialog()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
         }
     }
 

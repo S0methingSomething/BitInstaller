@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DownloadActivity : AppCompatActivity() {
     private val viewModel: DownloadViewModel by viewModels()
-    
+
     private lateinit var progressBar: ProgressBar
     private lateinit var sha256Text: TextView
     private lateinit var step1Status: TextView
@@ -83,8 +83,11 @@ class DownloadActivity : AppCompatActivity() {
                     }
                     is DownloadState.Success -> {
                         updateStep(4, "complete", "Installed ✓")
-                        Snackbar.make(findViewById(android.R.id.content), "Installation successful!", Snackbar.LENGTH_LONG)
-                            .setAction("Close") { finish() }
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            "Installation successful!",
+                            Snackbar.LENGTH_LONG
+                        ).setAction("Close") { finish() }
                             .show()
                     }
                     is DownloadState.Error -> {

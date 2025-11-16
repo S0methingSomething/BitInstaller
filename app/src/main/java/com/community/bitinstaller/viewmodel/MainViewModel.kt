@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(
     private val repository: AppRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
-    
+
     private val _apps = MutableStateFlow<List<AppItem>>(
         savedStateHandle.get<List<AppItem>>("apps") ?: emptyList()
     )
@@ -97,12 +97,12 @@ class MainViewModel @Inject constructor(
                         null
                     }
 
-                    val release = releases.find { it.tag_name == config.github.releaseTag }
+                    val release = releases.find { it.tagName == config.github.releaseTag }
                     val availableVersion = release?.let { parseVersionFromDescription(it.body, config.appName) }
 
                     AppItem(config, isInstalled, installedVersion, availableVersion)
                 }
-                
+
                 _apps.value = appItems
                 savedStateHandle["apps"] = appItems
             } catch (e: IllegalStateException) {
@@ -120,8 +120,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun getDownloadUrl(config: AppConfig): String? {
-        val release = releases.find { it.tag_name == config.github.releaseTag } ?: return null
+        val release = releases.find { it.tagName == config.github.releaseTag } ?: return null
         val asset = release.assets.find { it.name == config.github.assetName } ?: return null
-        return asset.browser_download_url
+        return asset.browserDownloadUrl
     }
 }

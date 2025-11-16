@@ -5,7 +5,7 @@ import android.content.res.AssetManager
 import com.community.bitinstaller.utils.ConfigLoader
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.ByteArrayInputStream
 
@@ -18,7 +18,7 @@ class ConfigLoaderTest {
             package_name = "com.example.app"
             app_name = "Test App"
             target_path = "files/config"
-            
+
             [apps.github]
             release_tag = "v1.0.0"
             asset_name = "config.dat"

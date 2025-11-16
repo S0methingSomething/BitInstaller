@@ -1,6 +1,5 @@
 package com.community.bitinstaller.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.community.bitinstaller.utils.FileDownloader
@@ -25,7 +24,6 @@ sealed class DownloadState {
 
 @HiltViewModel
 class DownloadViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val fileDownloader: FileDownloader,
     private val shizukuHelper: ShizukuHelper
 ) : ViewModel() {

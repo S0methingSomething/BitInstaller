@@ -5,7 +5,9 @@ import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
@@ -38,11 +40,11 @@ class GitHubApiServiceTest {
                 }]
             }]
         """.trimIndent()
-        
+
         server.enqueue(MockResponse().setBody(json))
-        
+
         val releases = service.fetchReleases()
-        
+
         assertEquals(1, releases.size)
         assertEquals("v1.0.0", releases[0].tag_name)
     }
@@ -50,7 +52,7 @@ class GitHubApiServiceTest {
     @Test
     fun `fetchReleases throws on 404`() = runTest {
         server.enqueue(MockResponse().setResponseCode(404))
-        
+
         try {
             service.fetchReleases()
             fail("Should have thrown exception")
@@ -62,7 +64,7 @@ class GitHubApiServiceTest {
     @Test
     fun `fetchReleases throws on 403 rate limit`() = runTest {
         server.enqueue(MockResponse().setResponseCode(403))
-        
+
         try {
             service.fetchReleases()
             fail("Should have thrown exception")

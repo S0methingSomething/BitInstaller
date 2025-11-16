@@ -54,11 +54,9 @@ class AppListAdapter(
 }
 
 private class AppDiffCallback : DiffUtil.ItemCallback<AppItem>() {
-    override fun areItemsTheSame(oldItem: AppItem, newItem: AppItem): Boolean {
-        return oldItem.config.packageName == newItem.config.packageName
-    }
+    override fun areItemsTheSame(oldItem: AppItem, newItem: AppItem): Boolean =
+        oldItem.config.packageName == newItem.config.packageName
 
-    override fun areContentsTheSame(oldItem: AppItem, newItem: AppItem): Boolean {
-        return oldItem == newItem
-    }
+    override fun areContentsTheSame(oldItem: AppItem, newItem: AppItem): Boolean =
+        oldItem == newItem
 }

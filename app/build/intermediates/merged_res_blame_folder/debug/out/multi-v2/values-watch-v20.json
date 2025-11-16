@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.community.bitinstaller.app-mergeDebugResources-34:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.community.bitinstaller.app-mergeDebugResources-36:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/3cbbdf143a903323c998aca37cfd4403/transformed/appcompat-1.6.1/res/values-watch-v20/values-watch-v20.xml",
+                    "source": "/home/cloudytfn/.gradle/caches/8.11.1/transforms/217414c7626a26b74e5b61672722108f/transformed/appcompat-1.6.1/res/values-watch-v20/values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

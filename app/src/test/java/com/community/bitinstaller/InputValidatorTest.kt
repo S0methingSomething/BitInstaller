@@ -1,7 +1,8 @@
 package com.community.bitinstaller
 
 import com.community.bitinstaller.utils.InputValidator
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class InputValidatorTest {

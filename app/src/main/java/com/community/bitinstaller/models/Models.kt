@@ -25,14 +25,16 @@ data class GithubConfig(
 )
 
 data class GitHubRelease(
-    val tag_name: String,
+    @SerialName("tag_name")
+    val tagName: String,
     val body: String?,
     val assets: List<GitHubAsset>
 )
 
 data class GitHubAsset(
     val name: String,
-    val browser_download_url: String
+    @SerialName("browser_download_url")
+    val browserDownloadUrl: String
 )
 
 @Serializable

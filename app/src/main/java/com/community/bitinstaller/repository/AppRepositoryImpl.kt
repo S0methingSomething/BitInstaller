@@ -13,9 +13,8 @@ class AppRepositoryImpl @Inject constructor(
     private val apiServiceFactory: GitHubApiServiceFactory
 ) : AppRepository {
 
-    override suspend fun loadAppsConfig(): List<AppConfig> {
-        return configLoader.loadAppsConfig().apps
-    }
+    override suspend fun loadAppsConfig(): List<AppConfig> =
+        configLoader.loadAppsConfig().apps
 
     override suspend fun fetchReleases(repository: String): List<GitHubRelease> {
         val apiService = apiServiceFactory.create(repository)
@@ -29,7 +28,6 @@ interface GitHubApiServiceFactory {
 
 @Singleton
 class GitHubApiServiceFactoryImpl @Inject constructor() : GitHubApiServiceFactory {
-    override fun create(repository: String): GitHubApiService {
-        return GitHubApiService(repository)
-    }
+    override fun create(repository: String): GitHubApiService =
+        GitHubApiService(repository)
 }

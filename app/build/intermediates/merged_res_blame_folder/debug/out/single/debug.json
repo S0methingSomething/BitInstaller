@@ -1,18 +1,22 @@
 [
     {
-        "merged": "com.community.bitinstaller.app-merged_res-36:/layout_activity_main.xml.flat",
-        "source": "com.community.bitinstaller.app-main-38:/layout/activity_main.xml"
+        "merged": "com.community.bitinstaller.app-merged_res-38:/menu_main_menu.xml.flat",
+        "source": "com.community.bitinstaller.app-main-40:/menu/main_menu.xml"
     },
     {
-        "merged": "com.community.bitinstaller.app-merged_res-36:/menu_main_menu.xml.flat",
-        "source": "com.community.bitinstaller.app-main-38:/menu/main_menu.xml"
+        "merged": "com.community.bitinstaller.app-merged_res-38:/layout_activity_main.xml.flat",
+        "source": "com.community.bitinstaller.app-main-40:/layout/activity_main.xml"
     },
     {
-        "merged": "com.community.bitinstaller.app-merged_res-36:/layout_item_app.xml.flat",
-        "source": "com.community.bitinstaller.app-main-38:/layout/item_app.xml"
+        "merged": "com.community.bitinstaller.app-merged_res-38:/layout_empty_state.xml.flat",
+        "source": "com.community.bitinstaller.app-main-40:/layout/empty_state.xml"
     },
     {
-        "merged": "com.community.bitinstaller.app-merged_res-36:/layout_activity_download.xml.flat",
-        "source": "com.community.bitinstaller.app-main-38:/layout/activity_download.xml"
+        "merged": "com.community.bitinstaller.app-merged_res-38:/layout_item_app.xml.flat",
+        "source": "com.community.bitinstaller.app-main-40:/layout/item_app.xml"
+    },
+    {
+        "merged": "com.community.bitinstaller.app-merged_res-38:/layout_activity_download.xml.flat",
+        "source": "com.community.bitinstaller.app-main-40:/layout/activity_download.xml"
     }
 ]

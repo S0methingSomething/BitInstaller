@@ -14,9 +14,8 @@ object InputValidator {
      * @param packageName The package name to validate
      * @return true if the package name matches Android naming conventions
      */
-    fun validatePackageName(packageName: String): Boolean {
-        return PACKAGE_NAME_REGEX.matches(packageName)
-    }
+    fun validatePackageName(packageName: String): Boolean =
+        PACKAGE_NAME_REGEX.matches(packageName)
 
     /**
      * Validates a target path to prevent path traversal attacks.
