@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.20'
-    id 'io.gitlab.arturbosch.detekt' version '1.23.4'
+    id 'io.gitlab.arturbosch.detekt' version '1.23.8'
     id 'com.google.dagger.hilt.android' version '2.48'
     id 'kotlin-kapt'
 }
@@ -158,7 +158,7 @@ dependencies {
     androidTestImplementation 'io.mockk:mockk-android:1.13.8'
     
     // Static analysis
-    detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4'
+    detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8'
 }
 
 tasks.register('checkCode') {
