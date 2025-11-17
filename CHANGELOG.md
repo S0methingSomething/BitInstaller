@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/S0methingSomething/BitInstaller/compare/v1.0.0...v1.0.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* show release tag as version when description parsing fails ([0cda67e](https://github.com/S0methingSomething/BitInstaller/commit/0cda67e78cd8c17775ac37970f98407d157d7d9f))
+
 # 1.0.0 (2025-11-17)
 
 
