@@ -37,11 +37,11 @@ class AppListAdapter(
 
             val versionText = buildString {
                 if (item.installedVersion != null) {
-                    append("App version: ${item.installedVersion}")
+                    append("Installed: ${item.config.appName} ${item.installedVersion}")
                 }
                 if (item.availableVersion != null) {
                     if (isNotEmpty()) append("\n")
-                    append("Source version: ${item.availableVersion}")
+                    append("Available: MonetizationVars ${item.availableVersion}")
                 }
             }
             versionInfo.text = versionText

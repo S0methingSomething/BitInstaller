@@ -98,7 +98,9 @@ class MainViewModel @Inject constructor(
                     }
 
                     val release = releases.find { it.tagName == config.github.releaseTag }
-                    val availableVersion = release?.let { parseVersionFromDescription(it.body, config.appName) }
+                    val availableVersion = release?.let {
+                        parseVersionFromDescription(it.body, config.appName) ?: it.tagName
+                    }
 
                     AppItem(config, isInstalled, installedVersion, availableVersion)
                 }
