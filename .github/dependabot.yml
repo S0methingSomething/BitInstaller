@@ -4,7 +4,20 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
+    groups:
+      kotlin-hilt:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "*hilt*"
+          - "*dagger*"
+      androidx:
+        patterns:
+          - "androidx.*"
+      testing:
+        patterns:
+          - "*test*"
+          - "*mockk*"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -13,6 +26,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions:
+        patterns:
+          - "*"
     commit-message:
       prefix: "chore"
       include: "scope"
