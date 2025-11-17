@@ -1,9 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.22'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.2.21'
     id 'io.gitlab.arturbosch.detekt' version '1.23.4'
-    id 'com.google.dagger.hilt.android' version '2.50'
+    id 'com.google.dagger.hilt.android' version '2.57.2'
     id 'kotlin-kapt'
 }
 
@@ -126,7 +126,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
     
     // Network
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
@@ -143,13 +143,13 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.48'
-    kapt 'com.google.dagger:hilt-compiler:2.48'
+    implementation 'com.google.dagger:hilt-android:2.57.2'
+    kapt 'com.google.dagger:hilt-compiler:2.57.2'
     
     // Testing
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.13.8'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2'
     testImplementation 'androidx.arch.core:core-testing:2.2.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
     
